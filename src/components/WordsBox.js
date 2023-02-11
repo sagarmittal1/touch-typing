@@ -1,13 +1,19 @@
-const WordsBox = (props) => {
+const WordsBox = ({ words }) => {
   return (
     <div className="container">
       <h2>
-        {props.words.map((word) => (
-          <>
-            <span>{word}</span>
-            <span> </span>
-          </>
-        ))}
+        {words.map((word, id) => {
+          return (
+            <>
+              <span key={id}>
+                {word.split('').map((char, idx) => {
+                  return <span key={idx}>{char}</span>;
+                })}
+              </span>
+              <span> </span>
+            </>
+          );
+        })}
       </h2>
     </div>
   );
