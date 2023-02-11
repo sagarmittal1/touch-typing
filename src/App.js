@@ -15,9 +15,10 @@ const generateWords = () => {
 
 function App() {
   const [words, setWords] = useState([]);
-
   const [activeWordIndex, setActiveWordIndex] = useState(0);
   const [seconds, setSeconds] = useState(NO_OF_SECONDS);
+  const [correctWords, setCorrectWords] = useState(0);
+  const [incorrectWords, setIncorrectWords] = useState(0);
 
   useEffect(() => {
     setWords(generateWords());
@@ -28,6 +29,11 @@ function App() {
     setActiveWordIndex((prev) => prev + 1);
     const isMatched = correctWord === currentInput.trim();
     console.log(isMatched, currentInput, correctWord);
+    if (isMatched) {
+      setCorrectWords(correctWords + 1);
+    } else {
+      setIncorrectWords(incorrectWords + 1);
+    }
   };
 
   const startCountdownHandler = () => {
@@ -47,8 +53,12 @@ function App() {
     <>
       <Timer seconds={seconds} />
       <WordsBox words={words} />
-      <TypingBox words={words} checkingMatching={checkMatchingHandler} startTimer={startCountdownHandler} />
-      <TypingStats />
+      <TypingBox
+        words={words}
+        checkingMatching={checkMatchingHandler}
+        startTimer={startCountdownHandler}
+      />
+      <TypingStats correct={correctWords} incorrect={incorrectWords} />
     </>
   );
 }
