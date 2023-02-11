@@ -4,6 +4,7 @@ import randomWords from 'random-words';
 import TypingBox from './components/TypingBox';
 import TypingStats from './components/TypingStats';
 import WordsBox from './components/WordsBox';
+import Timer from './components/Timer';
 
 const NO_OF_WORDS = 30;
 const NO_OF_SECONDS = 60;
@@ -14,17 +15,24 @@ const generateWords = () => {
 
 function App() {
   const [words, setWords] = useState([]);
+  const [activeWordIndex, setActiveWordIndex] = useState(0);
 
   useEffect(() => {
     setWords(generateWords());
   }, []);
 
-  console.log(words);
+  const checkMatchingHandler = (currentInput) => {
+    const correctWord = words[activeWordIndex];
+    setActiveWordIndex((prev) => prev + 1);
+    const isMatched = correctWord === currentInput.trim();
+    console.log(isMatched, currentInput, correctWord);
+  };
 
   return (
     <>
+      <Timer />
       <WordsBox words={words} />
-      <TypingBox />
+      <TypingBox words={words} checkingMatching={checkMatchingHandler} />
       <TypingStats />
     </>
   );
