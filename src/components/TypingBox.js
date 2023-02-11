@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const TypingBox = ({ words, checkingMatching }) => {
+const TypingBox = ({ words, checkingMatching, startTimer }) => {
   const [currentInput, setCurrentInput] = useState('');
 
   const inputRef = useRef(null);
@@ -8,7 +8,7 @@ const TypingBox = ({ words, checkingMatching }) => {
   const keyDownHandler = (e) => {
     if (e.key === ' ') {
       checkingMatching(currentInput);
-      setCurrentInput("");
+      setCurrentInput('');
     }
   };
 
@@ -28,6 +28,7 @@ const TypingBox = ({ words, checkingMatching }) => {
         value={currentInput}
         onKeyDown={keyDownHandler}
         onChange={inputChangeHandler}
+        onFocus={startTimer}
       />
     </div>
   );
