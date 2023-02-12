@@ -19,6 +19,7 @@ function App() {
   const [seconds, setSeconds] = useState(NO_OF_SECONDS);
   const [correctWords, setCorrectWords] = useState(0);
   const [incorrectWords, setIncorrectWords] = useState(0);
+  const [status, setStatus] = useState('waiting');
 
   useEffect(() => {
     setWords(generateWords());
@@ -40,6 +41,7 @@ function App() {
     let interval = setInterval(() => {
       setSeconds((prevSec) => {
         if (prevSec === 0) {
+          setStatus('finished');
           clearInterval(interval);
           return 0;
         } else {
@@ -47,6 +49,10 @@ function App() {
         }
       });
     }, 1000);
+  };
+
+  const statusChangeHandler = (state) => {
+    setStatus(state);
   };
 
   return (
@@ -57,6 +63,7 @@ function App() {
         words={words}
         checkingMatching={checkMatchingHandler}
         startTimer={startCountdownHandler}
+        changeStatus={statusChangeHandler}
       />
       <TypingStats correct={correctWords} incorrect={incorrectWords} />
     </>

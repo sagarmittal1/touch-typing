@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-const TypingBox = ({ words, checkingMatching, startTimer }) => {
+const TypingBox = ({ checkingMatching, startTimer, changeStatus }) => {
   const [currentInput, setCurrentInput] = useState('');
 
   const inputRef = useRef(null);
@@ -16,6 +16,11 @@ const TypingBox = ({ words, checkingMatching, startTimer }) => {
     setCurrentInput(e.target.value);
   };
 
+  const startTestHandler = () => {
+    startTimer();
+    changeStatus('started');
+  };
+
   return (
     <div className="container flex-container">
       <input
@@ -28,7 +33,7 @@ const TypingBox = ({ words, checkingMatching, startTimer }) => {
         value={currentInput}
         onKeyDown={keyDownHandler}
         onChange={inputChangeHandler}
-        onFocus={startTimer}
+        onFocus={startTestHandler}
       />
     </div>
   );
